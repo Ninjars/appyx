@@ -3,11 +3,7 @@ package com.bumble.appyx.sandbox.client.container
 import android.content.Intent
 import android.os.Parcelable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -33,21 +29,7 @@ import com.bumble.appyx.sandbox.client.backstack.BackStackExampleNode
 import com.bumble.appyx.sandbox.client.blocker.BlockerExampleNode
 import com.bumble.appyx.sandbox.client.combined.CombinedNavModelNode
 import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.BackStackExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.BlockerExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.CombinedNavModel
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.Customisations
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.InteractorExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.LazyExamples
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.ModalExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.MviCoreExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.MviCoreLeafExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.NavModelExamples
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.Picker
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.RequestPermissionsExamples
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.SpotlightAdvancedExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.SpotlightExample
-import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.TilesExample
+import com.bumble.appyx.sandbox.client.container.ContainerNode.NavTarget.*
 import com.bumble.appyx.sandbox.client.customisations.createViewCustomisationsActivityIntent
 import com.bumble.appyx.sandbox.client.integrationpoint.IntegrationPointExampleNode
 import com.bumble.appyx.sandbox.client.interactorusage.InteractorNodeBuilder
@@ -58,6 +40,7 @@ import com.bumble.appyx.sandbox.client.mvicoreexample.MviCoreExampleBuilder
 import com.bumble.appyx.sandbox.client.mvicoreexample.leaf.MviCoreLeafBuilder
 import com.bumble.appyx.sandbox.client.spotlight.SpotlightExampleNode
 import com.bumble.appyx.sandbox.client.spotlightadvancedexample.SpotlightAdvancedExampleNode
+import com.bumble.appyx.sandbox.client.tiles.TileColumnExampleNode
 import com.bumble.appyx.sandbox.client.tiles.TilesExampleNode
 import com.bumble.appyx.sandbox.client.workflow.WorkflowExampleActivity
 import com.bumble.appyx.utils.customisations.NodeCustomisation
@@ -89,6 +72,9 @@ class ContainerNode internal constructor(
 
         @Parcelize
         object TilesExample : NavTarget()
+
+        @Parcelize
+        object TileColumnExample : NavTarget()
 
         @Parcelize
         object ModalExample : NavTarget()
@@ -135,6 +121,7 @@ class ContainerNode internal constructor(
             is SpotlightAdvancedExample -> SpotlightAdvancedExampleNode(buildContext)
             is ModalExample -> ModalExampleNode(buildContext)
             is TilesExample -> TilesExampleNode(buildContext)
+            is TileColumnExample -> TileColumnExampleNode(buildContext)
             is CombinedNavModel -> CombinedNavModelNode(buildContext)
             is LazyExamples -> LazyListContainerNode(buildContext)
             is SpotlightExample -> SpotlightExampleNode(buildContext)
@@ -237,6 +224,7 @@ class ContainerNode internal constructor(
                 TextButton("SpotlightAdvanced example") { backStack.push(SpotlightAdvancedExample) }
                 TextButton("Backstack example") { backStack.push(BackStackExample) }
                 TextButton("Tiles example") { backStack.push(TilesExample) }
+                TextButton("Tile Column example") { backStack.push(TileColumnExample) }
                 TextButton("Modal example") { backStack.push(ModalExample) }
                 TextButton("Combined navModel") { backStack.push(CombinedNavModel) }
                 TextButton("Node with interactor") { backStack.push(InteractorExample) }
