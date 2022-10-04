@@ -19,10 +19,7 @@ import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.navmodel.tiles.Tiles
-import com.bumble.appyx.navmodel.tiles.operation.deselect
-import com.bumble.appyx.navmodel.tiles.operation.deselectAll
-import com.bumble.appyx.navmodel.tiles.operation.removeSelected
-import com.bumble.appyx.navmodel.tiles.operation.select
+import com.bumble.appyx.navmodel.tiles.operation.*
 import com.bumble.appyx.navmodel.tiles.transitionhandler.rememberTileColumnTransitionHandler
 import com.bumble.appyx.sandbox.client.child.ChildNode
 import com.bumble.appyx.sandbox.client.tiles.TileColumnExampleNode.NavTarget
@@ -80,7 +77,27 @@ class TileColumnExampleNode(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    itemsIndexed(elements) { index, element ->
+                    itemsIndexed(
+                        items = elements,
+                        key = { _, element -> element.key }
+                    ) { index, element ->
+                        val wasVisible = remember { mutableStateOf(false) }
+                        val isItemWithKeyInView by remember {
+                            derivedStateOf {
+                                listState.layoutInfo
+                                    .visibleItemsInfo
+                                    .any { it.key == element.key }
+                            }
+                        }
+                        if (wasVisible.value != isItemWithKeyInView) {
+                            wasVisible.value = isItemWithKeyInView
+                            if (isItemWithKeyInView) {
+                                tiles.becomeVisible(element.key)
+                            } else {
+                                tiles.becomeHidden(element.key)
+                            }
+                        }
+
                         Child(
                             navElement = element,
                             transitionHandler = rememberTileColumnTransitionHandler(
@@ -105,6 +122,7 @@ class TileColumnExampleNode(
                                             tiles.deselect(element.key)
                                         }
                                         Tiles.State.CREATED,
+                                        Tiles.State.HIDDEN,
                                         Tiles.State.DESTROYED -> Unit
                                     }
                                 }

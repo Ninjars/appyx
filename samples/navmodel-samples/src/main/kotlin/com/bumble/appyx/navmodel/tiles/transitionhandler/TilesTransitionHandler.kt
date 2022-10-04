@@ -35,6 +35,7 @@ class TilesTransitionHandler<T>(
             targetValueByState = {
                 when (it) {
                     Tiles.State.CREATED -> 0f
+                    Tiles.State.HIDDEN -> 0f
                     Tiles.State.STANDARD -> 0.75f
                     Tiles.State.SELECTED -> 1.0f
                     Tiles.State.DESTROYED -> 0f

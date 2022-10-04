@@ -20,7 +20,7 @@ class Tiles<T : Any>(
 ) {
 
     enum class State {
-        CREATED, STANDARD, SELECTED, DESTROYED
+        CREATED, HIDDEN, STANDARD, SELECTED, DESTROYED
     }
 
     override val initialElements = initialItems.map {

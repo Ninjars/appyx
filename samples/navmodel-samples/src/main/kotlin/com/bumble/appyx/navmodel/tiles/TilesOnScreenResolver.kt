@@ -8,6 +8,7 @@ internal object TilesOnScreenResolver : OnScreenStateResolver<State> {
         when (state) {
             State.CREATED,
             State.STANDARD,
+            State.HIDDEN,
             State.SELECTED -> true
             State.DESTROYED -> false
         }

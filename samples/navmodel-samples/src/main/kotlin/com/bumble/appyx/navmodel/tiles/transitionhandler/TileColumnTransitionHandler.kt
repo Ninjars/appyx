@@ -1,10 +1,7 @@
 package com.bumble.appyx.navmodel.tiles.transitionhandler
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.Transition
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -38,7 +35,8 @@ class TileColumnTransitionHandler<T>(
             transitionSpec = transitionSpec,
             targetValueByState = {
                 when (it) {
-                    Tiles.State.CREATED -> 24f
+                    Tiles.State.CREATED,
+                    Tiles.State.HIDDEN -> 36f
                     Tiles.State.STANDARD -> 16f
                     Tiles.State.SELECTED -> 0f
                     Tiles.State.DESTROYED -> 24f
@@ -60,6 +58,7 @@ class TileColumnTransitionHandler<T>(
                 when (it) {
                     Tiles.State.CREATED -> 0f
                     Tiles.State.STANDARD -> 0f
+                    Tiles.State.HIDDEN -> 0f
                     Tiles.State.SELECTED -> 1f
                     Tiles.State.DESTROYED -> 0f
                 }
@@ -70,6 +69,7 @@ class TileColumnTransitionHandler<T>(
             targetValueByState = {
                 when (it) {
                     Tiles.State.CREATED -> 1f
+                    Tiles.State.HIDDEN -> 0f
                     Tiles.State.STANDARD -> 0f
                     Tiles.State.SELECTED -> 1f
                     Tiles.State.DESTROYED -> 0f
@@ -107,7 +107,18 @@ class TileColumnTransitionHandler<T>(
 fun <T> rememberTileColumnTransitionHandler(
     maxWidth: Dp,
     maxHeight: Dp,
-    transitionSpec: TransitionSpec<Tiles.State, Float> = { spring(stiffness = Spring.StiffnessVeryLow) }
+    transitionSpec: TransitionSpec<Tiles.State, Float> = {
+        when (this.targetState) {
+            Tiles.State.HIDDEN ->
+                // needs to be instant as this transition only plays when the element re-joins the composition
+                tween(0)
+            Tiles.State.CREATED,
+            Tiles.State.STANDARD,
+            Tiles.State.SELECTED,
+            Tiles.State.DESTROYED ->
+                spring(stiffness = Spring.StiffnessVeryLow)
+        }
+    }
 ): ModifierTransitionHandler<T, Tiles.State> = remember {
     TileColumnTransitionHandler(maxWidth, maxHeight, transitionSpec)
 }
