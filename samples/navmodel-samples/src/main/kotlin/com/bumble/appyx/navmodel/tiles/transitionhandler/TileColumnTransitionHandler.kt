@@ -107,18 +107,7 @@ class TileColumnTransitionHandler<T>(
 fun <T> rememberTileColumnTransitionHandler(
     maxWidth: Dp,
     maxHeight: Dp,
-    transitionSpec: TransitionSpec<Tiles.State, Float> = {
-        when (this.targetState) {
-            Tiles.State.HIDDEN ->
-                // needs to be instant as this transition only plays when the element re-joins the composition
-                tween(0)
-            Tiles.State.CREATED,
-            Tiles.State.STANDARD,
-            Tiles.State.SELECTED,
-            Tiles.State.DESTROYED ->
-                spring(stiffness = Spring.StiffnessVeryLow)
-        }
-    }
+    transitionSpec: TransitionSpec<Tiles.State, Float> = { spring(stiffness = Spring.StiffnessVeryLow) }
 ): ModifierTransitionHandler<T, Tiles.State> = remember {
     TileColumnTransitionHandler(maxWidth, maxHeight, transitionSpec)
 }

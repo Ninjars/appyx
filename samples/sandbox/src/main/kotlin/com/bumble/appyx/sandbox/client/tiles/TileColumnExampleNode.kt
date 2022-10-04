@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.composable.Child
 import com.bumble.appyx.core.composable.visibleChildrenAsState
 import com.bumble.appyx.core.modality.BuildContext
+import com.bumble.appyx.core.navigation.NavKey
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.navmodel.tiles.Tiles
@@ -67,7 +68,16 @@ class TileColumnExampleNode(
                 val expandedElementSpacingPixels =
                     LocalDensity.current.run { expandedElementSpacingDp.roundToPx() }
                 val listState: LazyListState = rememberLazyListState()
+                val visibleItems by remember {
+                    derivedStateOf {
+                        listState.layoutInfo
+                            .visibleItemsInfo
+                            .map { (it.key as NavKey<NavTarget>) }
+                    }
+                }
+                tiles.transitionVisible(visibleItems)
                 val coroutineScope = rememberCoroutineScope()
+
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -81,22 +91,6 @@ class TileColumnExampleNode(
                         items = elements,
                         key = { _, element -> element.key }
                     ) { index, element ->
-                        val wasVisible = remember { mutableStateOf(false) }
-                        val isItemWithKeyInView by remember {
-                            derivedStateOf {
-                                listState.layoutInfo
-                                    .visibleItemsInfo
-                                    .any { it.key == element.key }
-                            }
-                        }
-                        if (wasVisible.value != isItemWithKeyInView) {
-                            wasVisible.value = isItemWithKeyInView
-                            if (isItemWithKeyInView) {
-                                tiles.becomeVisible(element.key)
-                            } else {
-                                tiles.becomeHidden(element.key)
-                            }
-                        }
 
                         Child(
                             navElement = element,
