@@ -61,12 +61,11 @@ class TileColumnExampleNode(
             ) {
                 val elements by tiles.visibleChildrenAsState()
                 // Need to do recomposition tests to see if this actually helps
-                val isAnyElementSelected =
-                    remember {
-                        derivedStateOf {
-                            elements.firstOrNull { it.targetState == Tiles.State.SELECTED } != null
-                        }
+                val isAnyElementSelected by remember {
+                    derivedStateOf {
+                        elements.any { it.targetState == Tiles.State.SELECTED }
                     }
+                }
                 val expandedElementSpacingDp = 60.dp
                 val expandedElementSpacingPixels =
                     LocalDensity.current.run { expandedElementSpacingDp.roundToPx() }
@@ -77,7 +76,7 @@ class TileColumnExampleNode(
                         .fillMaxSize(),
                     state = listState,
                     contentPadding = PaddingValues(horizontal = 16.dp),
-                    userScrollEnabled = !isAnyElementSelected.value,
+                    userScrollEnabled = !isAnyElementSelected,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
