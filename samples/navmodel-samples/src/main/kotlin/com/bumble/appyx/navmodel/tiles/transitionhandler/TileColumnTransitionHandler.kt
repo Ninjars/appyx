@@ -7,7 +7,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -15,6 +15,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import com.bumble.appyx.core.navigation.transition.ModifierTransitionHandler
 import com.bumble.appyx.core.navigation.transition.TransitionDescriptor
 import com.bumble.appyx.core.navigation.transition.TransitionSpec
@@ -33,14 +34,14 @@ class TileColumnTransitionHandler<T>(
         transition: Transition<Tiles.State>,
         descriptor: TransitionDescriptor<T, Tiles.State>
     ): Modifier = modifier.composed {
-        val widthScale = transition.animateFloat(
+        val horizontalPadding = transition.animateFloat(
             transitionSpec = transitionSpec,
             targetValueByState = {
                 when (it) {
-                    Tiles.State.CREATED -> 0f
-                    Tiles.State.STANDARD -> 0.75f
-                    Tiles.State.SELECTED -> 1.0f
-                    Tiles.State.DESTROYED -> 1.0f
+                    Tiles.State.CREATED -> 24f
+                    Tiles.State.STANDARD -> 16f
+                    Tiles.State.SELECTED -> 0f
+                    Tiles.State.DESTROYED -> 24f
                 }
             })
 
@@ -91,7 +92,7 @@ class TileColumnTransitionHandler<T>(
                 min = maxHeight * minHeightProgress.value,
             )
         }
-            .width(maxWidth * widthScale.value)
+            .padding(horizontal = horizontalPadding.value.dp)
             .offset {
                 IntOffset(
                     x = (maxWidth * destroyProgress.value).roundToPx(),
