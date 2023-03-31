@@ -29,8 +29,7 @@ internal class MinimumCombinedLifecycle(
         lifecycles.sortedBy { it.currentState }.forEach { manage(it) }
     }
 
-    override fun getLifecycle(): Lifecycle =
-        registry
+    override val lifecycle: Lifecycle = registry
 
     fun manage(lifecycle: Lifecycle) {
         lifecycles += lifecycle

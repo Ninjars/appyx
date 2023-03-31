@@ -1,7 +1,7 @@
 package com.bumble.appyx.multiplatform.interfaces
 
 interface LifecycleOwner {
-    fun getLifecycle(): Lifecycle
+    val lifecycle: Lifecycle
 }
 
 interface LocalLifecycleOwnerProvider : () -> LifecycleOwner

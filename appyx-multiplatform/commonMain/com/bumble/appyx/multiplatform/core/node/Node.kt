@@ -42,6 +42,12 @@ open class Node(
     plugins: List<Plugin> = emptyList()
 ) : NodeLifecycle, NodeView by view, RequestCodeClient {
 
+    val id = getNodeId(buildContext)
+
+    override val requestCodeClientId: String = id
+
+    override val lifecycle get() = nodeLifecycle.lifecycle
+
     @Suppress("LeakingThis") // Implemented in the same way as in androidx.Fragment
     private val nodeLifecycle = NodeLifecycleImpl(multiplatformDeps.lifecycleRegistryProvider(this))
 
@@ -73,12 +79,8 @@ open class Node(
 
     private var wasBuilt = false
 
-    val id = getNodeId(buildContext)
-
-    override val requestCodeClientId: String = id
-
     init {
-        getLifecycle().addObserver(object : DefaultLifecycleObserver {
+        lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 if (!wasBuilt) error("onBuilt was not invoked for $this")
             }
@@ -105,7 +107,7 @@ open class Node(
         wasBuilt = true
         updateLifecycleState(Lifecycle.State.CREATED)
         plugins<NodeReadyObserver<Node>>().forEach { it.init(this) }
-        plugins<NodeLifecycleAware>().forEach { it.onCreate(getLifecycle()) }
+        plugins<NodeLifecycleAware>().forEach { it.onCreate(lifecycle) }
     }
 
     @Composable
@@ -150,14 +152,10 @@ open class Node(
         }
     }
 
-    override fun getLifecycle(): Lifecycle =
-        nodeLifecycle.getLifecycle()
-
     fun getScopedCoroutineContext(): CoroutineContext =
-        getLifecycle().getScopedCoroutineContext()
+        lifecycle.getScopedCoroutineContext()
 
     override fun updateLifecycleState(state: Lifecycle.State) {
-        val lifecycle = getLifecycle()
         if (lifecycle.currentState == state) return
         if (lifecycle.currentState == Lifecycle.State.DESTROYED && state != Lifecycle.State.DESTROYED) {
             com.bumble.appyx.Appyx.reportException(

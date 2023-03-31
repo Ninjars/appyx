@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 fun LifecycleOwner.asFlow(): Flow<Lifecycle.State> =
-    getLifecycle().asFlow()
+    lifecycle.asFlow()
 
 fun Lifecycle.asFlow(): Flow<Lifecycle.State> =
     callbackFlow {
         val observer = object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                trySend(source.getLifecycle().currentState)
+                trySend(source.lifecycle.currentState)
             }
         }
         trySend(currentState)

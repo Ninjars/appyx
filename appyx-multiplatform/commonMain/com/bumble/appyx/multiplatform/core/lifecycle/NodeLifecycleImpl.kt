@@ -7,8 +7,7 @@ internal class NodeLifecycleImpl(
     private val lifecycleRegistry: LifecycleRegistry
 ) : NodeLifecycle {
 
-    override fun getLifecycle(): Lifecycle =
-        lifecycleRegistry
+    override val lifecycle: Lifecycle = lifecycleRegistry
 
     override fun updateLifecycleState(state: Lifecycle.State) {
         lifecycleRegistry.setCurrentState(state)
