@@ -1,4 +1,4 @@
-package com.bumble.appyx.core
+package kotlin.com.bumble.appyx.multiplatform.core
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

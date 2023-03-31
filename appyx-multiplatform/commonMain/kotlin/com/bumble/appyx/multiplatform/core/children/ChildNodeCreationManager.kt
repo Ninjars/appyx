@@ -6,8 +6,6 @@ import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.navigation.NavKey
 import com.bumble.appyx.core.node.ParentNode
 import com.bumble.appyx.core.node.build
-import com.bumble.appyx.core.state.MutableSavedStateMap
-import com.bumble.appyx.core.state.SavedStateMap
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
+import kotlin.com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
+import kotlin.com.bumble.appyx.multiplatform.core.state.SavedStateMap
 
 /**
  * Initializes and removes nodes based on parent node's navModel.

@@ -1,17 +1,17 @@
 package com.bumble.appyx.core.navigation.model.combined
 
 import androidx.activity.OnBackPressedCallback
-import com.bumble.appyx.core.combineState
 import com.bumble.appyx.core.navigation.NavElements
 import com.bumble.appyx.core.navigation.NavKey
 import com.bumble.appyx.core.navigation.NavModel
 import com.bumble.appyx.core.navigation.NavModelAdapter
-import com.bumble.appyx.core.state.MutableSavedStateMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.com.bumble.appyx.multiplatform.core.combineState
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.Destroyable
+import kotlin.com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
 import kotlin.coroutines.EmptyCoroutineContext
 
 class CombinedNavModel<NavTarget>(

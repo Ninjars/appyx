@@ -1,9 +1,7 @@
-package com.bumble.appyx.core.plugin
+package kotlin.com.bumble.appyx.multiplatform.core.plugin
 
-import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Lifecycle
 import com.bumble.appyx.core.node.Node
-import com.bumble.appyx.core.state.MutableSavedStateMap
+import kotlin.com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
 import kotlin.com.bumble.appyx.multiplatform.interfaces.Lifecycle
 import kotlin.com.bumble.appyx.multiplatform.interfaces.OnBackPressedCallback
 

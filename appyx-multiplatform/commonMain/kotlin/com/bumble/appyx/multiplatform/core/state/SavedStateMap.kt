@@ -1,4 +1,4 @@
-package com.bumble.appyx.core.state
+package kotlin.com.bumble.appyx.multiplatform.core.state
 
 /**
  * Restored from [android.os.Bundle] state.

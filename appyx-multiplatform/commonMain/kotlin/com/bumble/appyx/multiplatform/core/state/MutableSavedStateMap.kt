@@ -1,4 +1,4 @@
-package com.bumble.appyx.core.state
+package kotlin.com.bumble.appyx.multiplatform.core.state
 
 import androidx.compose.runtime.saveable.SaverScope
 

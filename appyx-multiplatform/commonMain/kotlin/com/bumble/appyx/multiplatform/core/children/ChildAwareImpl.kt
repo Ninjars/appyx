@@ -8,12 +8,12 @@ import com.bumble.appyx.core.lifecycle.isDestroyed
 import com.bumble.appyx.core.navigation.NavKey
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.ParentNode
-import com.bumble.appyx.core.withPrevious
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlin.com.bumble.appyx.multiplatform.core.withPrevious
 import kotlin.reflect.KClass
 
 class ChildAwareImpl<N : Node> : ChildAware<N> {

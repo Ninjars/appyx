@@ -16,9 +16,9 @@ import com.bumble.appyx.core.integrationpoint.IntegrationPoint
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.node.Node
 import com.bumble.appyx.core.node.build
-import com.bumble.appyx.core.state.SavedStateMap
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectory
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectoryImpl
+import kotlin.com.bumble.appyx.multiplatform.core.state.SavedStateMap
 
 /**
  * Composable function to host [Node].

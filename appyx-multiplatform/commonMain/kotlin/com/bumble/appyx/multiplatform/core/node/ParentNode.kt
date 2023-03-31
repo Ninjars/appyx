@@ -26,7 +26,6 @@ import com.bumble.appyx.core.children.ChildrenCallback
 import com.bumble.appyx.core.children.nodeOrNull
 import com.bumble.appyx.core.composable.ChildRenderer
 import com.bumble.appyx.core.lifecycle.ChildNodeLifecycleManager
-import com.bumble.appyx.core.mapState
 import com.bumble.appyx.core.modality.BuildContext
 import com.bumble.appyx.core.navigation.NavKey
 import com.bumble.appyx.core.navigation.NavModel
@@ -35,7 +34,6 @@ import com.bumble.appyx.core.navigation.isTransitioning
 import com.bumble.appyx.core.navigation.model.combined.plus
 import com.bumble.appyx.core.navigation.model.permanent.PermanentNavModel
 import com.bumble.appyx.core.navigation.model.permanent.operation.addUnique
-import com.bumble.appyx.core.state.MutableSavedStateMap
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -43,7 +41,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.com.bumble.appyx.multiplatform.core.mapState
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.Plugin
+import kotlin.com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
 import kotlin.coroutines.resume
 import kotlin.reflect.KClass
 

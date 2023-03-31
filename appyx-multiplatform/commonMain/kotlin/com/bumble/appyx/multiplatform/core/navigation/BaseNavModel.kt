@@ -1,15 +1,12 @@
 package com.bumble.appyx.core.navigation
 
 import androidx.activity.OnBackPressedCallback
-import com.bumble.appyx.core.mapState
 import com.bumble.appyx.core.navigation.backpresshandlerstrategies.BackPressHandlerStrategy
 import com.bumble.appyx.core.navigation.backpresshandlerstrategies.DontHandleBackPress
 import com.bumble.appyx.core.navigation.onscreen.OnScreenStateResolver
 import com.bumble.appyx.core.navigation.onscreen.isOnScreen
 import com.bumble.appyx.core.navigation.operationstrategies.ExecuteImmediately
 import com.bumble.appyx.core.navigation.operationstrategies.OperationStrategy
-import com.bumble.appyx.core.state.MutableSavedStateMap
-import com.bumble.appyx.core.state.SavedStateMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
@@ -17,8 +14,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.com.bumble.appyx.multiplatform.core.mapState
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.BackPressHandler
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.Destroyable
+import kotlin.com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
+import kotlin.com.bumble.appyx.multiplatform.core.state.SavedStateMap
 import kotlin.coroutines.EmptyCoroutineContext
 
 /**

@@ -24,9 +24,7 @@ import com.bumble.appyx.core.lifecycle.NodeLifecycle
 import com.bumble.appyx.core.lifecycle.NodeLifecycleImpl
 import com.bumble.appyx.core.modality.AncestryInfo
 import com.bumble.appyx.core.modality.BuildContext
-import com.bumble.appyx.core.state.MutableSavedStateMap
 import com.bumble.appyx.core.state.MutableSavedStateMapImpl
-import com.bumble.appyx.core.state.SavedStateMap
 import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.BackPressHandler
@@ -37,6 +35,8 @@ import kotlin.com.bumble.appyx.multiplatform.core.plugin.Plugin
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.SavesInstanceState
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.UpNavigationHandler
 import kotlin.com.bumble.appyx.multiplatform.core.plugin.plugins
+import kotlin.com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
+import kotlin.com.bumble.appyx.multiplatform.core.state.SavedStateMap
 
 @Suppress("TooManyFunctions")
 @Stable
