@@ -1,6 +1,6 @@
 package com.bumble.appyx.multiplatform.core.children
 
-import com.bumble.appyx.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
 import com.bumble.appyx.multiplatform.core.node.Node
 import com.bumble.appyx.multiplatform.core.state.SavedStateMap
 

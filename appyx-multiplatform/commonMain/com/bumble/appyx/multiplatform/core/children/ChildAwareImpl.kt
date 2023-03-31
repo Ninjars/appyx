@@ -1,14 +1,13 @@
 package com.bumble.appyx.multiplatform.core.children
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.coroutineScope
-import com.bumble.appyx.core.lifecycle.isDestroyed
-import com.bumble.appyx.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.lifecycle.isDestroyed
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
 import com.bumble.appyx.multiplatform.core.node.Node
 import com.bumble.appyx.multiplatform.core.node.ParentNode
 import com.bumble.appyx.multiplatform.core.withPrevious
+import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
+import com.bumble.appyx.multiplatform.interfaces.Lifecycle
+import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
