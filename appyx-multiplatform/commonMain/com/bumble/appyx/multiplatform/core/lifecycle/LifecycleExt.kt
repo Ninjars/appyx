@@ -1,20 +1,22 @@
 package com.bumble.appyx.multiplatform.core.lifecycle
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
+import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
+import com.bumble.appyx.multiplatform.interfaces.Lifecycle
+import com.bumble.appyx.multiplatform.interfaces.LifecycleEventObserver
+import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 fun LifecycleOwner.asFlow(): Flow<Lifecycle.State> =
-    lifecycle.asFlow()
+    getLifecycle().asFlow()
 
 fun Lifecycle.asFlow(): Flow<Lifecycle.State> =
     callbackFlow {
-        val observer = LifecycleEventObserver { source, _ ->
-            trySend(source.lifecycle.currentState)
+        val observer = object : LifecycleEventObserver {
+            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                trySend(source.getLifecycle().currentState)
+            }
         }
         trySend(currentState)
         addObserver(observer)

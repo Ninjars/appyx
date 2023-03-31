@@ -7,6 +7,8 @@ interface Lifecycle {
 
     fun addObserver(observer: LifecycleObserver)
 
+    fun removeObserver(observer: LifecycleObserver)
+
     /*
      on android: Lifecycle.coroutineScope
      */
@@ -15,5 +17,15 @@ interface Lifecycle {
     enum class State {
         CREATED,
         DESTROYED,
+    }
+
+    enum class Event {
+        ON_CREATE,
+        ON_START,
+        ON_RESUME,
+        ON_PAUSE,
+        ON_STOP,
+        ON_DESTROY,
+        ON_ANY,
     }
 }
