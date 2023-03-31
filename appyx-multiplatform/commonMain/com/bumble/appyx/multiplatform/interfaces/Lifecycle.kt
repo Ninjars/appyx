@@ -15,7 +15,9 @@ interface Lifecycle {
     fun getScopedCoroutineContext(): CoroutineContext
 
     enum class State {
+        INITIALIZED,
         CREATED,
+        RESUMED,
         DESTROYED,
     }
 

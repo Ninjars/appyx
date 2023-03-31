@@ -1,14 +1,13 @@
 package com.bumble.appyx.multiplatform.core.lifecycle
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleRegistry
-import com.bumble.appyx.core.navigation.NavKey
-import com.bumble.appyx.core.navigation.NavModel
-import com.bumble.appyx.core.navigation.NavModelAdapter
 import com.bumble.appyx.multiplatform.core.children.ChildEntry
 import com.bumble.appyx.multiplatform.core.children.ChildEntryMap
 import com.bumble.appyx.multiplatform.core.children.nodeOrNull
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.navigation.NavModel
+import com.bumble.appyx.multiplatform.core.navigation.NavModelAdapter
 import com.bumble.appyx.multiplatform.core.withPrevious
+import com.bumble.appyx.multiplatform.interfaces.Lifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

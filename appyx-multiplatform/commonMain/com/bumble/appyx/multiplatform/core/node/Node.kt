@@ -153,7 +153,7 @@ open class Node(
     override fun getLifecycle(): Lifecycle =
         nodeLifecycle.getLifecycle()
 
-    override fun getScopedCoroutineContext(): CoroutineContext =
+    fun getScopedCoroutineContext(): CoroutineContext =
         getLifecycle().getScopedCoroutineContext()
 
     override fun updateLifecycleState(state: Lifecycle.State) {

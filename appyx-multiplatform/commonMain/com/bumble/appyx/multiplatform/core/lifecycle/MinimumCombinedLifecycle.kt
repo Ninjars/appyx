@@ -1,9 +1,9 @@
 package com.bumble.appyx.multiplatform.core.lifecycle
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LifecycleRegistry
+import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
+import com.bumble.appyx.multiplatform.interfaces.Lifecycle
+import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
+import com.bumble.appyx.multiplatform.interfaces.LifecycleRegistryProvider
 
 /**
  * Combines multiple lifecycles and provides a minimum of their states.
@@ -14,9 +14,10 @@ import androidx.lifecycle.LifecycleRegistry
  * - INITIALIZED + DESTROYED -> DESTROYED
  */
 internal class MinimumCombinedLifecycle(
+    lifecycleRegistryProvider: LifecycleRegistryProvider,
     vararg lifecycles: Lifecycle,
 ) : LifecycleOwner {
-    private val registry = LifecycleRegistry(this)
+    private val registry = lifecycleRegistryProvider(this)
     private val lifecycles = ArrayList<Lifecycle>()
 
     init {
