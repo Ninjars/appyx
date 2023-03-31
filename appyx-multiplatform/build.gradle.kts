@@ -19,6 +19,7 @@ kotlin {
                 api(compose.foundation)
                 api(compose.material)
                 api(project(":libraries:core"))
+                api(project(":libraries:customisations"))
             }
         }
     }
