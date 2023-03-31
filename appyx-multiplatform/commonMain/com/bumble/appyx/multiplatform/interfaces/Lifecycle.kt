@@ -1,18 +1,15 @@
 package com.bumble.appyx.multiplatform.interfaces
 
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
 
 interface Lifecycle {
     var currentState: State
 
+    val coroutineScope: CoroutineScope
+
     fun addObserver(observer: LifecycleObserver)
 
     fun removeObserver(observer: LifecycleObserver)
-
-    /*
-     on android: Lifecycle.coroutineScope
-     */
-    fun getScopedCoroutineContext(): CoroutineContext
 
     enum class State {
         INITIALIZED,

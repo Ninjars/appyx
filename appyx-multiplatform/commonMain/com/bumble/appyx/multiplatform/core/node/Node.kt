@@ -154,8 +154,7 @@ open class Node(
         }
     }
 
-    fun getScopedCoroutineContext(): CoroutineContext =
-        lifecycle.getScopedCoroutineContext()
+    fun getScopedCoroutineContext(): CoroutineContext = lifecycle.coroutineScope.coroutineContext
 
     override fun updateLifecycleState(state: Lifecycle.State) {
         if (lifecycle.currentState == state) return
