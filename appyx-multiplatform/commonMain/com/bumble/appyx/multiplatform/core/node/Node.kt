@@ -36,13 +36,14 @@ import kotlin.coroutines.CoroutineContext
 @Suppress("TooManyFunctions")
 @Stable
 open class Node(
+    private val multiplatformDeps: MultiplatformDeps,
     buildContext: BuildContext,
     val view: NodeView = EmptyNodeView,
     plugins: List<Plugin> = emptyList()
 ) : NodeLifecycle, NodeView by view, RequestCodeClient {
 
     @Suppress("LeakingThis") // Implemented in the same way as in androidx.Fragment
-    private val nodeLifecycle = NodeLifecycleImpl(this)
+    private val nodeLifecycle = NodeLifecycleImpl(multiplatformDeps.lifecycleRegistryProvider(this))
 
     val plugins: List<Plugin> = plugins + listOfNotNull(this as? Plugin)
 
@@ -77,10 +78,7 @@ open class Node(
     override val requestCodeClientId: String = id
 
     init {
-        if (BuildConfig.DEBUG) {
-            lifecycle.addObserver(LifecycleLogger)
-        }
-        lifecycle.addObserver(object : DefaultLifecycleObserver {
+        getLifecycle().addObserver(object : DefaultLifecycleObserver {
             override fun onCreate(owner: LifecycleOwner) {
                 if (!wasBuilt) error("onBuilt was not invoked for $this")
             }
@@ -95,35 +93,26 @@ open class Node(
         )
     }
 
-    @Deprecated(
-        replaceWith = ReplaceWith("executeAction(action)"),
-        message = "Will be removed in 1.1"
-    )
-    protected suspend inline fun <reified T : Node> executeWorkflow(
-        crossinline action: () -> Unit
-    ): T = executeAction(action)
-
     protected suspend inline fun <reified T : Node> executeAction(
         crossinline action: () -> Unit
-    ): T = withContext(lifecycleScope.coroutineContext) {
+    ): T = withContext(getScopedCoroutineContext()) {
         action()
         this@Node as T
     }
 
-    @CallSuper
     open fun onBuilt() {
         require(!wasBuilt) { "onBuilt was already invoked" }
         wasBuilt = true
         updateLifecycleState(Lifecycle.State.CREATED)
         plugins<NodeReadyObserver<Node>>().forEach { it.init(this) }
-        plugins<NodeLifecycleAware>().forEach { it.onCreate(lifecycle) }
+        plugins<NodeLifecycleAware>().forEach { it.onCreate(getLifecycle()) }
     }
 
     @Composable
     fun Compose(modifier: Modifier = Modifier) {
         CompositionLocalProvider(
             LocalNode provides this,
-            LocalLifecycleOwner provides this,
+//            LocalLifecycleOwner provides this, TODO(): what replaces this?
         ) {
             HandleBackPress()
             View(modifier)
@@ -138,13 +127,12 @@ open class Node(
             // reversed order because we want direct order, but onBackPressedDispatcher invokes them in reversed order
             plugins.filterIsInstance<BackPressHandler>().reversed()
         }
-        val dispatcher =
-            LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher ?: return
-        val lifecycleOwner = LocalLifecycleOwner.current
+        val dispatcher = multiplatformDeps.onBackPressedDispatcherProvider() ?: return
+        val lifecycleOwner = multiplatformDeps.localLifecycleOwnerProvider()
         DisposableEffect(lifecycleOwner, dispatcher) {
             backPressHandlerPlugins.forEach { plugin ->
                 if (!plugin.isCorrect()) {
-                    Appyx.reportException(
+                    com.bumble.appyx.Appyx.reportException(
                         IllegalStateException(
                             "Plugin $plugin has implementation for both BackPressHandler properties, implement only one"
                         )
@@ -163,12 +151,16 @@ open class Node(
     }
 
     override fun getLifecycle(): Lifecycle =
-        nodeLifecycle.lifecycle
+        nodeLifecycle.getLifecycle()
+
+    override fun getScopedCoroutineContext(): CoroutineContext =
+        getLifecycle().getScopedCoroutineContext()
 
     override fun updateLifecycleState(state: Lifecycle.State) {
+        val lifecycle = getLifecycle()
         if (lifecycle.currentState == state) return
         if (lifecycle.currentState == Lifecycle.State.DESTROYED && state != Lifecycle.State.DESTROYED) {
-            Appyx.reportException(
+            com.bumble.appyx.Appyx.reportException(
                 IllegalStateException(
                     "Trying to change lifecycle state of already destroyed node ${this::class.qualifiedName}"
                 )
@@ -190,7 +182,6 @@ open class Node(
         return writer.savedState
     }
 
-    @CallSuper
     protected open fun onSaveInstanceState(state: MutableSavedStateMap) {
         state[NODE_ID_KEY] = id
     }
@@ -218,7 +209,6 @@ open class Node(
         }
     }
 
-    @CallSuper
     protected open fun performUpNavigation(): Boolean =
         handleUpNavigationByPlugins() || parent?.performUpNavigation() == true
 
