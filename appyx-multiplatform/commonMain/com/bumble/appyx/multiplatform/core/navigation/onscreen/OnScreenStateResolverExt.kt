@@ -1,6 +1,6 @@
 package com.bumble.appyx.multiplatform.core.navigation.onscreen
 
-import com.bumble.appyx.core.navigation.NavElement
+import com.bumble.appyx.multiplatform.core.navigation.NavElement
 
 fun <State> OnScreenStateResolver<State>.isOnScreen(element: NavElement<*, out State>): Boolean =
     if (element.transitionHistory.isEmpty()) {

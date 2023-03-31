@@ -1,12 +1,12 @@
 package com.bumble.appyx.multiplatform.core.navigation.model.combined
 
-import androidx.activity.OnBackPressedCallback
-import com.bumble.appyx.core.navigation.NavElements
-import com.bumble.appyx.core.navigation.NavKey
-import com.bumble.appyx.core.navigation.NavModel
-import com.bumble.appyx.core.navigation.NavModelAdapter
+import com.bumble.appyx.multiplatform.core.navigation.NavElements
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.navigation.NavModel
+import com.bumble.appyx.multiplatform.core.navigation.NavModelAdapter
 import com.bumble.appyx.multiplatform.core.plugin.Destroyable
 import com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
+import com.bumble.appyx.multiplatform.interfaces.OnBackPressedCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel

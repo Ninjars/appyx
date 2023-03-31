@@ -1,6 +1,6 @@
 package com.bumble.appyx.multiplatform.core.navigation.model.combined
 
-import com.bumble.appyx.core.navigation.NavModel
+import com.bumble.appyx.multiplatform.core.navigation.NavModel
 
 operator fun <NavTarget> NavModel<NavTarget, *>.plus(
     other: NavModel<NavTarget, *>,

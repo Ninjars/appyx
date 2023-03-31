@@ -8,19 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.lifecycleScope
-import com.bumble.appyx.core.lifecycle.ChildNodeLifecycleManager
-import com.bumble.appyx.core.navigation.NavKey
-import com.bumble.appyx.core.navigation.NavModel
-import com.bumble.appyx.core.navigation.Resolver
-import com.bumble.appyx.core.navigation.isTransitioning
-import com.bumble.appyx.core.navigation.model.combined.plus
-import com.bumble.appyx.core.navigation.model.permanent.PermanentNavModel
-import com.bumble.appyx.core.navigation.model.permanent.operation.addUnique
 import com.bumble.appyx.multiplatform.core.children.ChildAware
 import com.bumble.appyx.multiplatform.core.children.ChildAwareImpl
 import com.bumble.appyx.multiplatform.core.children.ChildCallback
@@ -30,10 +17,22 @@ import com.bumble.appyx.multiplatform.core.children.ChildNodeCreationManager
 import com.bumble.appyx.multiplatform.core.children.ChildrenCallback
 import com.bumble.appyx.multiplatform.core.children.nodeOrNull
 import com.bumble.appyx.multiplatform.core.composable.ChildRenderer
+import com.bumble.appyx.multiplatform.core.lifecycle.ChildNodeLifecycleManager
 import com.bumble.appyx.multiplatform.core.mapState
 import com.bumble.appyx.multiplatform.core.modality.BuildContext
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.navigation.NavModel
+import com.bumble.appyx.multiplatform.core.navigation.Resolver
+import com.bumble.appyx.multiplatform.core.navigation.isTransitioning
+import com.bumble.appyx.multiplatform.core.navigation.model.combined.plus
+import com.bumble.appyx.multiplatform.core.navigation.model.permanent.PermanentNavModel
+import com.bumble.appyx.multiplatform.core.navigation.model.permanent.operation.addUnique
 import com.bumble.appyx.multiplatform.core.plugin.Plugin
 import com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
+import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
+import com.bumble.appyx.multiplatform.interfaces.Lifecycle
+import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
+import com.bumble.appyx.multiplatform.interfaces.MultiplatformDeps
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +46,7 @@ import kotlin.reflect.KClass
 @Suppress("TooManyFunctions")
 @Stable
 abstract class ParentNode<NavTarget : Any>(
+    multiplatformDeps: MultiplatformDeps,
     navModel: NavModel<NavTarget, *>,
     buildContext: BuildContext,
     view: ParentNodeView<NavTarget> = EmptyParentNodeView(),
@@ -54,6 +54,7 @@ abstract class ParentNode<NavTarget : Any>(
     private val childAware: ChildAware<ParentNode<NavTarget>> = ChildAwareImpl(),
     plugins: List<Plugin> = listOf(),
 ) : Node(
+    multiplatformDeps = multiplatformDeps,
     view = view,
     buildContext = buildContext,
     plugins = plugins + navModel + childAware
@@ -77,7 +78,7 @@ abstract class ParentNode<NavTarget : Any>(
         navModel = this.navModel,
         children = children,
         keepMode = childKeepMode,
-        coroutineScope = lifecycleScope,
+        coroutineScope = lifecycle.coroutineScope,
     )
 
     private var transitionsInBackgroundJob: Job? = null
@@ -227,7 +228,6 @@ abstract class ParentNode<NavTarget : Any>(
         // TODO warn unhandled child
     }
 
-    @CallSuper
     override fun onSaveInstanceState(state: MutableSavedStateMap) {
         super.onSaveInstanceState(state)
         // permanentNavModel is not provided as a plugin, store manually
@@ -264,7 +264,6 @@ abstract class ParentNode<NavTarget : Any>(
     // endregion
 
     // TODO Investigate how to remove it
-    @VisibleForTesting
     internal fun manageTransitionsInTest() {
         manageTransitionsInBackground()
     }

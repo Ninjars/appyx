@@ -1,6 +1,6 @@
 package com.bumble.appyx.multiplatform.core.navigation.operationstrategies
 
-import com.bumble.appyx.core.navigation.Operation
+import com.bumble.appyx.multiplatform.core.navigation.Operation
 
 class ExecuteImmediately<NavTarget, State> : BaseOperationStrategy<NavTarget, State>() {
 

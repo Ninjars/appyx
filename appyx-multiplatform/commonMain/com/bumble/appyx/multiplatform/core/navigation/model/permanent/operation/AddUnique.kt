@@ -1,9 +1,9 @@
 package com.bumble.appyx.multiplatform.core.navigation.model.permanent.operation
 
-import com.bumble.appyx.core.navigation.NavElement
-import com.bumble.appyx.core.navigation.NavElements
-import com.bumble.appyx.core.navigation.NavKey
-import com.bumble.appyx.core.navigation.model.permanent.PermanentNavModel
+import com.bumble.appyx.multiplatform.core.navigation.NavElement
+import com.bumble.appyx.multiplatform.core.navigation.NavElements
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.navigation.model.permanent.PermanentNavModel
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 

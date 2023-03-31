@@ -1,11 +1,11 @@
 package com.bumble.appyx.multiplatform.core.navigation.model.permanent
 
-import com.bumble.appyx.core.navigation.NavElement
-import com.bumble.appyx.core.navigation.NavKey
-import com.bumble.appyx.core.navigation.NavModel
-import com.bumble.appyx.core.navigation.NavModelAdapter
-import com.bumble.appyx.core.navigation.Operation
 import com.bumble.appyx.multiplatform.core.mapState
+import com.bumble.appyx.multiplatform.core.navigation.NavElement
+import com.bumble.appyx.multiplatform.core.navigation.NavKey
+import com.bumble.appyx.multiplatform.core.navigation.NavModel
+import com.bumble.appyx.multiplatform.core.navigation.NavModelAdapter
+import com.bumble.appyx.multiplatform.core.navigation.Operation
 import com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
 import com.bumble.appyx.multiplatform.core.state.SavedStateMap
 import kotlinx.coroutines.CoroutineScope

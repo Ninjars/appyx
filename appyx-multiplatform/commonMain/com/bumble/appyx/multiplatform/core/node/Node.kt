@@ -29,6 +29,7 @@ import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
 import com.bumble.appyx.multiplatform.interfaces.Lifecycle
 import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
 import com.bumble.appyx.multiplatform.interfaces.MultiplatformDeps
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -47,6 +48,7 @@ open class Node(
     override val requestCodeClientId: String = id
 
     override val lifecycle get() = nodeLifecycle.lifecycle
+    override val lifecycleScope: CoroutineScope get() = lifecycle.coroutineScope
 
     @Suppress("LeakingThis") // Implemented in the same way as in androidx.Fragment
     private val nodeLifecycle = NodeLifecycleImpl(multiplatformDeps.lifecycleRegistryProvider(this))

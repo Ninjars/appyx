@@ -1,7 +1,7 @@
 package com.bumble.appyx.multiplatform.core.navigation.operationstrategies
 
-import com.bumble.appyx.core.navigation.NavModel
-import com.bumble.appyx.core.navigation.Operation
+import com.bumble.appyx.multiplatform.core.navigation.NavModel
+import com.bumble.appyx.multiplatform.core.navigation.Operation
 import kotlinx.coroutines.CoroutineScope
 
 interface OperationStrategy<NavTarget, State> {

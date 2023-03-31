@@ -1,7 +1,7 @@
 package com.bumble.appyx.multiplatform.core.navigation.transition
 
 import androidx.compose.runtime.Immutable
-import com.bumble.appyx.core.navigation.Operation
+import com.bumble.appyx.multiplatform.core.navigation.Operation
 
 @Immutable
 data class TransitionDescriptor<NavTarget, out State>(

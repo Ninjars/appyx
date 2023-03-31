@@ -1,8 +1,8 @@
 package com.bumble.appyx.multiplatform.core.navigation.operationstrategies
 
-import com.bumble.appyx.core.navigation.NavElements
-import com.bumble.appyx.core.navigation.Operation
-import com.bumble.appyx.core.navigation.isTransitioning
+import com.bumble.appyx.multiplatform.core.navigation.NavElements
+import com.bumble.appyx.multiplatform.core.navigation.Operation
+import com.bumble.appyx.multiplatform.core.navigation.isTransitioning
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.util.*

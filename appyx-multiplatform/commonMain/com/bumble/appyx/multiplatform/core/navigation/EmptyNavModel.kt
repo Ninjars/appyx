@@ -1,6 +1,6 @@
 package com.bumble.appyx.multiplatform.core.navigation
 
-import com.bumble.appyx.core.navigation.onscreen.OnScreenStateResolver
+import com.bumble.appyx.multiplatform.core.navigation.onscreen.OnScreenStateResolver
 
 /**
  * An implementation of a NavModel that won't add any children.
