@@ -65,6 +65,8 @@ open class Node(
             is AncestryInfo.Root -> null
         }
 
+    val lifecycleRegistryProvider get() = multiplatformDeps.lifecycleRegistryProvider
+
     var integrationPoint: IntegrationPoint = IntegrationPointStub()
         get() {
             return if (isRoot) field

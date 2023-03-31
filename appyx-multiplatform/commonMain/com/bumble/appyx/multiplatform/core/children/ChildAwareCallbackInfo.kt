@@ -4,7 +4,6 @@ import com.bumble.appyx.multiplatform.core.lifecycle.MinimumCombinedLifecycle
 import com.bumble.appyx.multiplatform.core.lifecycle.isDestroyed
 import com.bumble.appyx.multiplatform.core.node.Node
 import com.bumble.appyx.multiplatform.interfaces.Lifecycle
-import com.bumble.appyx.multiplatform.interfaces.LifecycleRegistryProvider
 import kotlin.reflect.KClass
 import kotlin.reflect.cast
 import kotlin.reflect.safeCast
@@ -14,7 +13,6 @@ internal sealed class ChildAwareCallbackInfo {
     abstract fun onRegistered(activeNodes: List<Node>)
 
     class Single<T : Node>(
-        private val lifecycleRegistryProvider: LifecycleRegistryProvider,
         private val child: KClass<T>,
         private val callback: ChildCallback<T>,
         private val parentLifecycle: Lifecycle,
@@ -26,7 +24,7 @@ internal sealed class ChildAwareCallbackInfo {
             if (castedNode != null) {
                 val lifecycle =
                     MinimumCombinedLifecycle(
-                        lifecycleRegistryProvider,
+                        newNode.lifecycleRegistryProvider,
                         parentLifecycle,
                         newNode.lifecycle,
                     ).lifecycle
@@ -43,7 +41,6 @@ internal sealed class ChildAwareCallbackInfo {
     }
 
     class Double<T1 : Node, T2 : Node>(
-        private val lifecycleRegistryProvider: LifecycleRegistryProvider,
         private val child1: KClass<T1>,
         private val child2: KClass<T2>,
         private val callback: ChildrenCallback<T1, T2>,
@@ -76,7 +73,7 @@ internal sealed class ChildAwareCallbackInfo {
             if (parentLifecycle.isDestroyed) return
             val lifecycle =
                 MinimumCombinedLifecycle(
-                    lifecycleRegistryProvider,
+                    node1.lifecycleRegistryProvider,
                     parentLifecycle,
                     node1.lifecycle,
                     node2.lifecycle,
