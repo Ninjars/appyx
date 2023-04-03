@@ -1,9 +1,8 @@
 package com.bumble.appyx.multiplatform.interfaces
 
-interface OnBackPressedCallback {
-    val isEnabled: Boolean
+abstract class OnBackPressedCallback(var isEnabled: Boolean) {
 
-    fun handleOnBackPressed()
+    abstract fun handleOnBackPressed()
 
-    fun remove()
+    open fun remove() {}
 }
