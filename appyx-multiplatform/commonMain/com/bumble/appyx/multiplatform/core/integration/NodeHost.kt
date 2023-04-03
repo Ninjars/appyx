@@ -9,14 +9,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.mapSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import com.bumble.appyx.core.node.build
 import com.bumble.appyx.multiplatform.core.integrationpoint.IntegrationPoint
 import com.bumble.appyx.multiplatform.core.modality.BuildContext
 import com.bumble.appyx.multiplatform.core.node.Node
+import com.bumble.appyx.multiplatform.core.node.build
 import com.bumble.appyx.multiplatform.core.state.SavedStateMap
+import com.bumble.appyx.multiplatform.interfaces.Lifecycle
+import com.bumble.appyx.multiplatform.interfaces.LifecycleEventObserver
+import com.bumble.appyx.multiplatform.interfaces.LocalLifecycleOwnerProvider
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectory
 import com.bumble.appyx.utils.customisations.NodeCustomisationDirectoryImpl
 
@@ -28,6 +28,7 @@ import com.bumble.appyx.utils.customisations.NodeCustomisationDirectoryImpl
 @Suppress("ComposableParamOrder") // detekt complains as 'factory' param isn't a pure lambda
 @Composable
 fun <N : Node> NodeHost(
+    localLifecycleOwnerProvider: LocalLifecycleOwnerProvider,
     integrationPoint: IntegrationPoint,
     modifier: Modifier = Modifier,
     customisations: NodeCustomisationDirectory = remember { NodeCustomisationDirectoryImpl() },
@@ -38,7 +39,7 @@ fun <N : Node> NodeHost(
         onDispose { node.updateLifecycleState(Lifecycle.State.DESTROYED) }
     }
     node.Compose(modifier = modifier)
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val lifecycle = localLifecycleOwnerProvider().lifecycle
     DisposableEffect(lifecycle) {
         node.updateLifecycleState(lifecycle.currentState)
         val observer = LifecycleEventObserver { source, _ ->
