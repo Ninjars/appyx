@@ -13,10 +13,8 @@ fun LifecycleOwner.asFlow(): Flow<Lifecycle.State> =
 
 fun Lifecycle.asFlow(): Flow<Lifecycle.State> =
     callbackFlow {
-        val observer = object : LifecycleEventObserver {
-            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                trySend(source.lifecycle.currentState)
-            }
+        val observer = LifecycleEventObserver { source, _ ->
+            trySend(source.lifecycle.currentState)
         }
         trySend(currentState)
         addObserver(observer)

@@ -52,7 +52,7 @@ interface DefaultLifecycleObserver : FullLifecycleObserver {
  * If a class implements this interface and in the same time uses [OnLifecycleEvent], then
  * annotations will be ignored.
  */
-interface LifecycleEventObserver : LifecycleObserver {
+fun interface LifecycleEventObserver : LifecycleObserver {
     /**
      * Called when a state transition event happens.
      *
