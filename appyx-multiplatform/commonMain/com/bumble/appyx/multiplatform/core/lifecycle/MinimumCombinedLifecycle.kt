@@ -4,6 +4,7 @@ import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
 import com.bumble.appyx.multiplatform.interfaces.Lifecycle
 import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
 import com.bumble.appyx.multiplatform.interfaces.LifecycleRegistryProvider
+import kotlinx.coroutines.CoroutineScope
 
 /**
  * Combines multiple lifecycles and provides a minimum of their states.
@@ -30,6 +31,7 @@ internal class MinimumCombinedLifecycle(
     }
 
     override val lifecycle: Lifecycle = registry
+    override val lifecycleScope: CoroutineScope = registry.coroutineScope
 
     fun manage(lifecycle: Lifecycle) {
         lifecycles += lifecycle
