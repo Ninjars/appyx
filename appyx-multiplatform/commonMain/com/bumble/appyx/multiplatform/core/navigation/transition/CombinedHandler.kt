@@ -1,6 +1,5 @@
 package com.bumble.appyx.multiplatform.core.navigation.transition
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.core.Transition
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -11,7 +10,6 @@ class CombinedHandler<T, S>(
     private val handlers: List<ModifierTransitionHandler<T, S>>
 ) : ModifierTransitionHandler<T, S>() {
 
-    @SuppressLint("ModifierFactoryExtensionFunction")
     override fun createModifier(
         modifier: Modifier,
         transition: Transition<S>,
