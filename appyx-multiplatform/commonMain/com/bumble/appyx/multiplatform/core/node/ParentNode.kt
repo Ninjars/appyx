@@ -32,7 +32,7 @@ import com.bumble.appyx.multiplatform.core.state.MutableSavedStateMap
 import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
 import com.bumble.appyx.multiplatform.interfaces.Lifecycle
 import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
-import com.bumble.appyx.multiplatform.interfaces.MultiplatformDeps
+import com.bumble.appyx.multiplatform.interfaces.PlatformDeps
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -46,7 +46,7 @@ import kotlin.reflect.KClass
 @Suppress("TooManyFunctions")
 @Stable
 abstract class ParentNode<NavTarget : Any>(
-    multiplatformDeps: MultiplatformDeps,
+    platformDeps: PlatformDeps,
     navModel: NavModel<NavTarget, *>,
     buildContext: BuildContext,
     view: ParentNodeView<NavTarget> = EmptyParentNodeView(),
@@ -54,7 +54,7 @@ abstract class ParentNode<NavTarget : Any>(
     private val childAware: ChildAware<ParentNode<NavTarget>> = ChildAwareImpl(),
     plugins: List<Plugin> = listOf(),
 ) : Node(
-    multiplatformDeps = multiplatformDeps,
+    platformDeps = platformDeps,
     view = view,
     buildContext = buildContext,
     plugins = plugins + navModel + childAware

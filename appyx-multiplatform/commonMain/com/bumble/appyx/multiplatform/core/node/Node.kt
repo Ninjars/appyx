@@ -28,7 +28,7 @@ import com.bumble.appyx.multiplatform.core.state.SavedStateMap
 import com.bumble.appyx.multiplatform.interfaces.DefaultLifecycleObserver
 import com.bumble.appyx.multiplatform.interfaces.Lifecycle
 import com.bumble.appyx.multiplatform.interfaces.LifecycleOwner
-import com.bumble.appyx.multiplatform.interfaces.MultiplatformDeps
+import com.bumble.appyx.multiplatform.interfaces.PlatformDeps
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -37,7 +37,7 @@ import kotlin.coroutines.CoroutineContext
 @Suppress("TooManyFunctions")
 @Stable
 open class Node(
-    private val multiplatformDeps: MultiplatformDeps,
+    private val platformDeps: PlatformDeps,
     buildContext: BuildContext,
     val view: NodeView = EmptyNodeView,
     plugins: List<Plugin> = emptyList()
@@ -51,7 +51,7 @@ open class Node(
     override val lifecycleScope: CoroutineScope get() = lifecycle.coroutineScope
 
     @Suppress("LeakingThis") // Implemented in the same way as in androidx.Fragment
-    private val nodeLifecycle = NodeLifecycleImpl(multiplatformDeps.lifecycleRegistryProvider(this))
+    private val nodeLifecycle = NodeLifecycleImpl(platformDeps.lifecycleRegistryProvider(this))
 
     val plugins: List<Plugin> = plugins + listOfNotNull(this as? Plugin)
 
@@ -67,7 +67,7 @@ open class Node(
             is AncestryInfo.Root -> null
         }
 
-    val lifecycleRegistryProvider get() = multiplatformDeps.lifecycleRegistryProvider
+    val lifecycleRegistryProvider get() = platformDeps.lifecycleRegistryProvider
 
     var integrationPoint: IntegrationPoint = IntegrationPointStub()
         get() {
@@ -133,8 +133,8 @@ open class Node(
             // reversed order because we want direct order, but onBackPressedDispatcher invokes them in reversed order
             plugins.filterIsInstance<BackPressHandler>().reversed()
         }
-        val dispatcher = multiplatformDeps.onBackPressedDispatcherProvider() ?: return
-        val lifecycleOwner = multiplatformDeps.localLifecycleOwnerProvider()
+        val dispatcher = platformDeps.onBackPressedDispatcherProvider() ?: return
+        val lifecycleOwner = platformDeps.localLifecycleOwnerProvider()
         DisposableEffect(lifecycleOwner, dispatcher) {
             backPressHandlerPlugins.forEach { plugin ->
                 if (!plugin.isCorrect()) {

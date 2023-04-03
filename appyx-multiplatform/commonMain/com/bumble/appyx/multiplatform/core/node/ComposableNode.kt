@@ -3,14 +3,14 @@ package com.bumble.appyx.multiplatform.core.node
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.bumble.appyx.multiplatform.core.modality.BuildContext
-import com.bumble.appyx.multiplatform.interfaces.MultiplatformDeps
+import com.bumble.appyx.multiplatform.interfaces.PlatformDeps
 
 open class ComposableNode(
-    multiplatformDeps: MultiplatformDeps,
+    platformDeps: PlatformDeps,
     buildContext: BuildContext,
     private val composable: @Composable (Modifier) -> Unit
 ) : Node(
-    multiplatformDeps = multiplatformDeps,
+    platformDeps = platformDeps,
     buildContext = buildContext,
 ) {
 
@@ -21,8 +21,8 @@ open class ComposableNode(
 }
 
 fun node(
-    multiplatformDeps: MultiplatformDeps,
+    platformDeps: PlatformDeps,
     buildContext: BuildContext,
     composable: @Composable (Modifier) -> Unit
 ): Node =
-    ComposableNode(multiplatformDeps, buildContext, composable)
+    ComposableNode(platformDeps, buildContext, composable)
